@@ -2,7 +2,7 @@
 
 
 # Разностное уравнение (из полинома выражаем х в максимальной степени)
-# При каждом вызове нужно сместить коэффициенты приближения
+# При каждом вызове нужно сместить коэффициенты приближения вправо
 def finite_difference_equation(_coefficients, _approximation):
     result = 0
     length = len(_approximation)
@@ -18,9 +18,8 @@ def finite_difference_equation(_coefficients, _approximation):
 def bernoulli_approximation(f, _coefficients, _approximation, _iteration, accuracy=0.1 ** 5):
     x_last = finite_difference_equation(_coefficients, _approximation)
     max_root = x_last / _approximation[0]
-    multic = len(_approximation)
 
-    if abs(f(max_root)) <= accuracy * 0.1 ** (multic - 1):
+    if abs(f(max_root)) <= accuracy:
         return max_root, _iteration
     else:
         _approximation = [x_last] + _approximation[:-1]
@@ -42,7 +41,7 @@ def gornor_schema(_coefficients, root):
 
 # 2 steps: 1) approximation of max|root| 2) creation new polynomial coefficients
 # принимает: начальное приближение, коэффициенты
-def execute_method_interface(f, _coefficients, _approximation, accuracy=0.1**5):
+def execute_method_interface(f, _coefficients, _approximation, accuracy=0.1 ** 5):
     roots = []
     iterations = []
     f_from_roots = []
@@ -50,7 +49,9 @@ def execute_method_interface(f, _coefficients, _approximation, accuracy=0.1**5):
 
     for k in range(length):
         # 1) approximation of max|root|
-        temp = bernoulli_approximation(f, _coefficients, _approximation, 0, accuracy)
+        multic = 0.1 ** (length - k - 1)
+
+        temp = bernoulli_approximation(f, _coefficients, _approximation, 0, accuracy * multic)
 
         roots.append(temp[0])
         iterations.append(temp[1])

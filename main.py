@@ -7,7 +7,7 @@ import bernoulli
 
 # Constants
 # Константы
-accuracy = 0.1 ** 5
+accuracy = 0.1 ** 6
 
 # Coefficients of a polynomial
 # Коэффициенты полинома
@@ -30,7 +30,7 @@ def f(point, a=coefficients0):
 
 
 if __name__ == "__main__":
-    sys.setrecursionlimit(500)
+    sys.setrecursionlimit(2000)
 
     # Drawing
     # Построение
@@ -42,22 +42,22 @@ if __name__ == "__main__":
     drawing.show_plot()
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients0, [5, 4, 3, 2, 1], 0.1 ** 5))
+    print(bernoulli.execute_method_interface(f, coefficients0, [5, 4, 3, 2, 1], accuracy))
     end = time.time()
     print('{:f}'.format(end - start))
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients1, [5, 4, 3, 2], 0.1 ** 5))
+    print(bernoulli.execute_method_interface(f, coefficients1, [5, 4, 3, 2], accuracy))
     end = time.time()
     print('{:f}'.format(end - start))
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients2, [5, 4, 3], 0.1 ** 5))
+    print(bernoulli.execute_method_interface(f, coefficients2, [5, 4, 3], accuracy))
     end = time.time()
     print('{:f}'.format(end - start))
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients3, [5, 4], 0.1 ** 5))
+    print(bernoulli.execute_method_interface(f, coefficients3, [5, 4], accuracy))
     end = time.time()
     print('{:f}'.format(end - start))
 
