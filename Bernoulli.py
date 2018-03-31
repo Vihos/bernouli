@@ -7,11 +7,11 @@ import drawing as dr
 
 # Constants
 # Константы
-accuracy = 0.1 ** 20
+accuracy = 0.1 ** 3
 
 # Coefficients of a polynomial
 # Коэффициенты полинома
-coefficients = [1, 3, -24, 10, 13]
+coefficients = [1, -15, 85, -225, 274, -120, -2]
 
 
 # The polynomial at the point
@@ -45,16 +45,19 @@ def x_max_degree(_coefficients, _approximation):
 # принимает: начальное приближение, коэффициенты, номер итерации
 # возращает: корень и количество итераций, за которое он найден
 def bernoulli_approximation(_coefficients, _approximation, _iteration):
-    # print(_coefficients)
-    # print(_approximation)
-    # print(_iteration)
+    print(_iteration)
+    print(_coefficients)
+    print(_approximation)
     x_last = x_max_degree(_coefficients, _approximation)
     max_root = x_last / _approximation[0]
     print(max_root)
     print(f(max_root))
-    print(max_root)
+    print()
+    multic = len(_approximation)
+    print(multic)
+    print()
 
-    if abs(f(max_root)) <= accuracy:
+    if abs(f(max_root)) <= accuracy * 0.1 ** (multic - 1):
         return max_root, _iteration
     else:
         _approximation = [x_last] + _approximation[:-1]
@@ -81,22 +84,26 @@ def bernoulli_method_interface(_coefficients, _approximation):
     # print(_approximation)
     roots = []
     iterations = []
+    f_from_roots = []
     length = len(_approximation)
 
     for k in range(length):
         # 1) approximation of max|root|
         temp = bernoulli_approximation(_coefficients, _approximation, 0)
-        print()
-        print(temp)
-        print()
 
         roots.append(temp[0])
         iterations.append(temp[1])
+        f_from_roots.append(f(temp[0]))
+
+        print(roots)
+        print(iterations)
+        print(f_from_roots)
+        print()
 
         # 2) creation new polynomial coefficients
         _coefficients = gornor_schema(_coefficients, temp[0])
         _approximation.remove(_approximation[0])  # delete one approximation
-    return roots, iterations
+    return roots, iterations, f_from_roots
 
 
 if __name__ == "__main__":
@@ -107,7 +114,7 @@ if __name__ == "__main__":
 
     dr.show_plot()
 
-    print(bernoulli_method_interface(coefficients, [2, 2, 2, 2]))
+    print(bernoulli_method_interface(coefficients, [1, 1, 2, 1, 2, 1]))
 
     # mpl.bar_chart(
     #     [20, 35, 30, 35, 27],
