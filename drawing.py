@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+import datetime
+import random
+
 # Промежутки отрисовки функции
 START_X = -10
 END_X = 10
@@ -42,4 +45,46 @@ def build_function(func, argument=None, legend="", x_from=START_X, x_to=END_X, y
 
 # Отрисовывает функции, которые были построены через 'build_function(...)'
 def show_plot():
+    plt.show()
+
+
+def bar_chart(values_array, values_names=None, title=None, x_title=None, y_title=None, graph_params=None):
+    ind = np.arange(len(values_array))
+    width = 0.35
+
+    p = plt.bar(ind, values_array, width)
+
+    if title is not None:
+        plt.title(title)
+
+    if x_title is not None:
+        plt.xlabel(x_title)
+
+    if y_title is not None:
+        plt.ylabel(y_title)
+
+    if values_names is not None and len(values_names) == len(values_array):
+        plt.xticks(ind, values_names)
+
+    if graph_params is not None and len(graph_params) == 3:
+        plt.yticks(np.arange(graph_params[0], graph_params[1], graph_params[2]))
+
+    plt.show()
+
+
+def data_plot(x, y, title=None, x_title=None, y_title=None, xticks=None):
+    if title is not None:
+        plt.title(title)
+
+    if x_title is not None:
+        plt.xlabel(x_title)
+
+    if y_title is not None:
+        plt.ylabel(y_title)
+
+    if xticks is not None:
+        plt.xticks(xticks)
+
+    plt.plot(x, y)
+
     plt.show()
