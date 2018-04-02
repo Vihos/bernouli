@@ -30,8 +30,24 @@ def f(point, a=coefficients0):
     return result
 
 
+# def iter_benchmark(args):
+
+
+def format_output(args, time_):
+    roots = args[0]
+    iterations = args[1]
+
+    print("Полином степени {0}:".format(len(roots)))
+
+    for i in range(len(roots)):
+        print("Корень {0} найден за {1} итераций".format(roots[i], iterations[i]))
+    print("Общее время подсчёта: {:5f}мс".format(time_))
+
+    print()
+
+
 if __name__ == "__main__":
-    sys.setrecursionlimit(2000)
+    sys.setrecursionlimit(500)
 
     # Drawing
     # Построение
@@ -43,32 +59,38 @@ if __name__ == "__main__":
 
     drawing.show_plot()
 
-    result_time = []
+    # Bernoulli benchmark
+    bernoulli_time = []
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients0, [6, 5, 4, 3, 2, 1], accuracy))
-    end = time.time()
-    result_time.append(end - start)
+    ret = bernoulli.execute_method_interface(f, coefficients0, [6, 5, 4, 3, 2, 1], accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output(ret, result_time)
+    bernoulli_time.append(result_time)
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients1, [6, 5, 4, 3, 2], accuracy))
-    end = time.time()
-    result_time.append(end - start)
+    ret = bernoulli.execute_method_interface(f, coefficients1, [6, 5, 4, 3, 2], accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output(ret, result_time)
+    bernoulli_time.append(result_time)
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients2, [6, 5, 4, 3], accuracy))
-    end = time.time()
-    result_time.append(end - start)
+    ret = bernoulli.execute_method_interface(f, coefficients2, [6, 5, 4, 3], accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output(ret, result_time)
+    bernoulli_time.append(result_time)
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients3, [6, 5, 4], accuracy))
-    end = time.time()
-    result_time.append(end - start)
+    ret = bernoulli.execute_method_interface(f, coefficients3, [6, 5, 4], accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output(ret, result_time)
+    bernoulli_time.append(result_time)
 
     start = time.time()
-    print(bernoulli.execute_method_interface(f, coefficients4, [6, 5], accuracy))
-    end = time.time()
-    result_time.append(end - start)
+    ret = bernoulli.execute_method_interface(f, coefficients4, [6, 5], accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output(ret, result_time)
+    bernoulli_time.append(result_time)
 
     # drawing.bar_chart(
     #     [20, 35, 30, 35, 27],
@@ -79,8 +101,8 @@ if __name__ == "__main__":
     #     graph_params=[0, 51, 5]
     # )
 
-    drawing.data_plot([2, 3, 4, 5, 6], list(reversed(result_time)),
+    drawing.data_plot([2, 3, 4, 5, 6], list(reversed(bernoulli_time)),
                       "Рост времени рассчёта от роста степени полинома",
                       "Степень",
-                      "Время",
+                      "Время (мс)",
                       [2, 3, 4, 5, 6, 7])
