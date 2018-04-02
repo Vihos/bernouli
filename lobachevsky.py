@@ -1,3 +1,6 @@
+from decimal import *
+
+
 def lobachevsky_method(f, coefficients, coefficients_, iterations, accuracy=0.1 ** 5):
     temp = dict()
     length_c = len(coefficients)
@@ -9,7 +12,7 @@ def lobachevsky_method(f, coefficients, coefficients_, iterations, accuracy=0.1 
         if i + 1 < length_c:
             temp[i] = (coefficients[i + 1] / coefficients[i]) ** iter_power
 
-            if abs(f(temp[i], coefficients)) > accuracy and (f(-temp[i], coefficients)) > accuracy:
+            if abs(f(temp[i], coefficients_)) > accuracy and abs(f(-temp[i], coefficients_)) > accuracy:
                 accuracy_check = False
 
     if accuracy_check:

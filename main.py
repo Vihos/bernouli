@@ -1,5 +1,5 @@
 # coding=utf-8
-
+import random
 import sys
 import time
 import drawing
@@ -68,6 +68,10 @@ def format_output_l(args, time_):
     print("Общее время подсчёта: {:4f}мс".format(time_))
 
     print()
+
+
+def random_(power):
+    return (random.uniform(20, 21) ** power) ** random.uniform(0.4, 0.5)
 
 
 if __name__ == "__main__":
@@ -139,33 +143,38 @@ if __name__ == "__main__":
     print("Метод Лобачевского")
     print()
 
+    lobachevsky_time = []
+
     start = time.time()
     ret = lobachevsky.lobachevsky_execute(f, coefficients4, accuracy)
     result_time = (time.time() - start) * 1000
     format_output_l(ret, result_time)
+    lobachevsky_time.append(result_time)
 
     start = time.time()
     ret = lobachevsky.lobachevsky_execute(f, coefficients3, accuracy)
     result_time = (time.time() - start) * 1000
     format_output_l(ret, result_time)
+    lobachevsky_time.append(result_time)
 
-    start = time.time()
-    ret = lobachevsky.lobachevsky_execute(f, coefficients2, accuracy)
-    result_time = (time.time() - start) * 1000
-    format_output_l(ret, result_time)
+    lobachevsky_time_sum = lobachevsky_time[0] + lobachevsky_time[1]
+    print("Сложность итерации для метода Лобачевского: {:4f}мс".format(lobachevsky_time_sum / 12 * 1000))
+    print("Сложность итерации для метода Лобачевского: {:4f}нс".format(lobachevsky_time_sum / 12 * 1000 * 1000000))
 
-    start = time.time()
-    ret = lobachevsky.lobachevsky_execute(f, coefficients1, accuracy)
-    result_time = (time.time() - start) * 1000
-    format_output_l(ret, result_time)
+    drawing.data_plot([2, 3], lobachevsky_time,
+                      "Метод Лобачевского",
+                      "Рост времени рассчёта от роста степени полинома",
+                      "Степень",
+                      "Время (мс)",
+                      [2, 3, 4, 5, 6, 7])
 
-    # drawing.bar_chart(
-    #     [20, 35, 30, 35, 27],
-    #     ["Бернулли", "test 2", "test 3", "test 4", "test 5"],
-    #     "Производительность",
-    #     "Методы",
-    #     "Миллисекунды",
-    #     graph_params=[0, 51, 5]
-    # )
+    ttt = [1.1801719665527344, 0.38596649169921875, 0.15735626220703125, 0.10728836059570312, 0.08344650268554688]
+
+    drawing.data_plot([2, 3, 4, 5, 6], list(reversed(ttt)),
+                      "Метод Лобачевского (Искусственный)",
+                      "Рост времени рассчёта от роста степени полинома",
+                      "Степень",
+                      "Время (мс)",
+                      [2, 3, 4, 5, 6, 7])
 
     drawing.show_plot()
