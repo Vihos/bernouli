@@ -15,6 +15,7 @@ accuracy = 0.1 ** 6
 coefficients0 = [1, -21, 175, -735, 1624, -1764, 720]
 coefficients1 = [1, -15, 85, -225, 274, -120]
 coefficients2 = [1, -10, 35, -50, 24]
+# coefficients2_ = [1, -100, 3500, -50000, 24000]
 coefficients3 = [1, -6, 11, -6]
 coefficients4 = [1, -3, 2]
 
@@ -54,8 +55,23 @@ def format_output(args, time_):
     print()
 
 
+def format_output_l(args, time_):
+    roots = args[0]
+    iterations = args[1]
+
+    print("Полином степени {0}:".format(len(roots)))
+
+    for i in range(len(roots)):
+        print("Корень {0}".format(roots[i]))
+
+    print("Общее количество итераций: {0}".format(iterations))
+    print("Общее время подсчёта: {:4f}мс".format(time_))
+
+    print()
+
+
 if __name__ == "__main__":
-    sys.setrecursionlimit(500)
+    sys.setrecursionlimit(5000)
 
     # Drawing
     # Построение
@@ -70,6 +86,9 @@ if __name__ == "__main__":
     # Bernoulli benchmark
     bernoulli_time = []
     iter_b = 0
+
+    print("Метод Бернулли")
+    print()
 
     start = time.time()
     ret = bernoulli.execute_method_interface(f, coefficients0, [6, 5, 4, 3, 2, 1], accuracy)
@@ -116,7 +135,29 @@ if __name__ == "__main__":
                       "Время (мс)",
                       [2, 3, 4, 5, 6, 7])
 
-    print(lobachevsky.lobachevsky_execute(f, coefficients3, accuracy))
+    print()
+    print("Метод Лобачевского")
+    print()
+
+    start = time.time()
+    ret = lobachevsky.lobachevsky_execute(f, coefficients4, accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output_l(ret, result_time)
+
+    start = time.time()
+    ret = lobachevsky.lobachevsky_execute(f, coefficients3, accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output_l(ret, result_time)
+
+    start = time.time()
+    ret = lobachevsky.lobachevsky_execute(f, coefficients2, accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output_l(ret, result_time)
+
+    start = time.time()
+    ret = lobachevsky.lobachevsky_execute(f, coefficients1, accuracy)
+    result_time = (time.time() - start) * 1000
+    format_output_l(ret, result_time)
 
     # drawing.bar_chart(
     #     [20, 35, 30, 35, 27],

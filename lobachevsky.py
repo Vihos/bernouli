@@ -1,34 +1,37 @@
-def lobachevsky_method(f, coefficients, iterations, accuracy=0.1 ** 5):
-    if iterations > 0:
+def lobachevsky_method(f, coefficients, coefficients_, iterations, accuracy=0.1 ** 5):
+    temp = dict()
+    length_c = len(coefficients)
 
-        temp_x1 = (coefficients[1] / coefficients[0]) ** (1 / 2 ** (iterations - 1))
-        temp_x2 = (coefficients[2] / coefficients[1]) ** (1 / 2 ** (iterations - 1))
-        temp_x3 = (coefficients[3] / coefficients[2]) ** (1 / 2 ** (iterations - 1))
+    iter_power = 1 / 2 ** (iterations - 1)
 
-        if (abs(f(temp_x1, coefficients)) <= accuracy or (f(-temp_x1, coefficients)) <= accuracy) and (
-                abs(f(temp_x2, coefficients)) <= accuracy or (f(-temp_x2, coefficients)) <= accuracy) and (
-                abs(f(temp_x3, coefficients)) <= accuracy or (f(-temp_x3, coefficients)) <= accuracy):
+    accuracy_check = True
+    for i in range(length_c - 1):
+        if i + 1 < length_c:
+            temp[i] = (coefficients[i + 1] / coefficients[i]) ** iter_power
 
-            if abs(f(temp_x1, coefficients)) >= accuracy:
-                temp_x1 = -temp_x1
+            if abs(f(temp[i], coefficients)) > accuracy and (f(-temp[i], coefficients)) > accuracy:
+                accuracy_check = False
 
-            if abs(f(temp_x2, coefficients)) >= accuracy:
-                temp_x2 = -temp_x2
+    if accuracy_check:
+        acc_f = dict()
 
-            if abs(f(temp_x3, coefficients)) >= accuracy:
-                temp_x3 = -temp_x3
+        for i in range(length_c - 1):
+            if abs(f(temp[i], coefficients_)) >= accuracy:
+                temp[i] = -temp[i]
+                acc_f[i] = f(temp[i], coefficients_)
 
-            return [[temp_x1, temp_x2, temp_x3], iterations, [f(temp_x1, coefficients), f(temp_x2, coefficients), f(temp_x3, coefficients)]]
+        return [temp, iterations, acc_f]
 
-    b0 = coefficients[0] ** 2
-    b1 = coefficients[1] ** 2 - 2 * coefficients[0] * coefficients[2]
-    b2 = coefficients[2] ** 2 - 2 * coefficients[1] * coefficients[3]
-    b3 = coefficients[3] ** 2
+    b = dict()
 
-    coefficients = [b0, b1, b2, b3]
+    for i in range(length_c):
+        if i == 0 or i == length_c - 1:
+            b[i] = coefficients[i] ** 2
+        else:
+            b[i] = coefficients[i] ** 2 - 2 * coefficients[i - 1] * coefficients[i + 1]
 
-    return lobachevsky_method(f, coefficients, iterations + 1, accuracy)
+    return lobachevsky_method(f, b, coefficients_, iterations + 1, accuracy)
 
 
 def lobachevsky_execute(f, coefficients, accuracy=0.1 ** 5):
-    return lobachevsky_method(f, coefficients, 1, accuracy)
+    return lobachevsky_method(f, coefficients, coefficients, 1, accuracy)

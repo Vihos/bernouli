@@ -1,9 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-import datetime
-import random
-
 # Промежутки отрисовки функции
 START_X = -10
 END_X = 10
