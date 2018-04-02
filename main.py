@@ -77,6 +77,21 @@ def random_(power):
 if __name__ == "__main__":
     sys.setrecursionlimit(5000)
 
+    drawing.build_function(f, coefficients0, "f6(x)", -1, 7, -4, 4)
+    drawing.show_plot()
+
+    drawing.build_function(f, coefficients1, "f5(x)", -1, 7, -4, 4)
+    drawing.show_plot()
+
+    drawing.build_function(f, coefficients2, "f4(x)", -1, 7, -4, 4)
+    drawing.show_plot()
+
+    drawing.build_function(f, coefficients3, "f3(x)", -1, 7, -4, 4)
+    drawing.show_plot()
+
+    drawing.build_function(f, coefficients4, "f2(x)", -1, 7, -4, 4)
+    drawing.show_plot()
+
     # Drawing
     # Построение
     drawing.build_function(f, coefficients0, "f6(x)", -1, 7, -4, 4)
