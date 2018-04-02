@@ -4,6 +4,7 @@ import sys
 import time
 import drawing
 import bernoulli
+import lobachevsky
 
 # Constants
 # Константы
@@ -114,6 +115,8 @@ if __name__ == "__main__":
                       "Степень",
                       "Время (мс)",
                       [2, 3, 4, 5, 6, 7])
+
+    print(lobachevsky.lobachevsky_execute(f, coefficients3, accuracy))
 
     # drawing.bar_chart(
     #     [20, 35, 30, 35, 27],
