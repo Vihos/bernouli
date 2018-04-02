@@ -72,7 +72,7 @@ def bar_chart(values_array, values_names=None, title=None, x_title=None, y_title
     plt.show()
 
 
-def data_plot(x, y, title=None, x_title=None, y_title=None, xticks=None):
+def data_plot(x, y, legend, title=None, x_title=None, y_title=None, xticks=None):
     if title is not None:
         plt.title(title)
 
@@ -85,6 +85,5 @@ def data_plot(x, y, title=None, x_title=None, y_title=None, xticks=None):
     if xticks is not None:
         plt.xticks(xticks)
 
-    plt.plot(x, y)
-
-    plt.show()
+    plt.plot(x, y, label=legend)
+    plt.legend()

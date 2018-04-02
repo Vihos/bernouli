@@ -30,7 +30,14 @@ def f(point, a=coefficients0):
     return result
 
 
-# def iter_benchmark(args):
+def iter_benchmark(args, time_):
+    iterations = args[1]
+    iterations_count = 0
+
+    for i in range(len(iterations)):
+        iterations_count += iterations[i]
+
+    return time_ / iterations_count
 
 
 def format_output(args, time_):
@@ -41,7 +48,7 @@ def format_output(args, time_):
 
     for i in range(len(roots)):
         print("Корень {0} найден за {1} итераций".format(roots[i], iterations[i]))
-    print("Общее время подсчёта: {:5f}мс".format(time_))
+    print("Общее время подсчёта: {:4f}мс".format(time_))
 
     print()
 
@@ -61,36 +68,52 @@ if __name__ == "__main__":
 
     # Bernoulli benchmark
     bernoulli_time = []
+    iter_b = 0
 
     start = time.time()
     ret = bernoulli.execute_method_interface(f, coefficients0, [6, 5, 4, 3, 2, 1], accuracy)
     result_time = (time.time() - start) * 1000
     format_output(ret, result_time)
     bernoulli_time.append(result_time)
+    iter_b += iter_benchmark(ret, result_time)
 
     start = time.time()
     ret = bernoulli.execute_method_interface(f, coefficients1, [6, 5, 4, 3, 2], accuracy)
     result_time = (time.time() - start) * 1000
     format_output(ret, result_time)
     bernoulli_time.append(result_time)
+    iter_b += iter_benchmark(ret, result_time)
 
     start = time.time()
     ret = bernoulli.execute_method_interface(f, coefficients2, [6, 5, 4, 3], accuracy)
     result_time = (time.time() - start) * 1000
     format_output(ret, result_time)
     bernoulli_time.append(result_time)
+    iter_b += iter_benchmark(ret, result_time)
 
     start = time.time()
     ret = bernoulli.execute_method_interface(f, coefficients3, [6, 5, 4], accuracy)
     result_time = (time.time() - start) * 1000
     format_output(ret, result_time)
     bernoulli_time.append(result_time)
+    iter_b += iter_benchmark(ret, result_time)
 
     start = time.time()
     ret = bernoulli.execute_method_interface(f, coefficients4, [6, 5], accuracy)
     result_time = (time.time() - start) * 1000
     format_output(ret, result_time)
     bernoulli_time.append(result_time)
+    iter_b += iter_benchmark(ret, result_time)
+
+    bernoulli_iter_complexity = iter_b / 5 * 1000000
+    print("Сложность итерации для метода Бернулли: {:4f}нс".format(bernoulli_iter_complexity))
+
+    drawing.data_plot([2, 3, 4, 5, 6], list(reversed(bernoulli_time)),
+                      "Метод Бернулли",
+                      "Рост времени рассчёта от роста степени полинома",
+                      "Степень",
+                      "Время (мс)",
+                      [2, 3, 4, 5, 6, 7])
 
     # drawing.bar_chart(
     #     [20, 35, 30, 35, 27],
@@ -101,8 +124,4 @@ if __name__ == "__main__":
     #     graph_params=[0, 51, 5]
     # )
 
-    drawing.data_plot([2, 3, 4, 5, 6], list(reversed(bernoulli_time)),
-                      "Рост времени рассчёта от роста степени полинома",
-                      "Степень",
-                      "Время (мс)",
-                      [2, 3, 4, 5, 6, 7])
+    drawing.show_plot()

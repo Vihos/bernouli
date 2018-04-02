@@ -51,7 +51,7 @@ def execute_method_interface(f, _coefficients, _approximation, accuracy=0.1 ** 5
         # 1) approximation of max|root|
         multic = 0.1 ** (length - k - 1)
 
-        temp = bernoulli_approximation(f, _coefficients, _approximation, 0, accuracy * multic)
+        temp = bernoulli_approximation(f, _coefficients, _approximation, 1, accuracy * multic)
 
         roots.append(temp[0])
         iterations.append(temp[1])
